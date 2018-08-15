@@ -57,4 +57,35 @@
   };
 
   // ADD YOUR CODE HERE
-})();
+
+
+  let urlParams = new URLSearchParams(window.location.search);
+  let searchData = urlParams.get('search');
+  let searchUrl = `https://omdb-api.now.sh/?s=${searchData}`;
+
+
+
+  fetch(searchUrl)
+    .then(response => response.json())
+    .then( (data) => {
+      console.log(data)
+      const results = data.Search;
+      
+      for (const result in results) {
+        let currentMovie = 
+        {
+          id: results[result].imdbID,
+          poster: results[result].Poster,
+          title: results[result].Title,
+          year: results[result].Year
+        };
+        
+        movies.push(currentMovie)
+
+      };
+      
+      renderMovies();
+    });
+  
+
+  })();
